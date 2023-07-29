@@ -6,23 +6,26 @@ import "./fileManager.css";
 
 const FileManager = () => {
   const [data, setData] = useState(
-    JSON.parse(localStorage.getItem("data")) || jsonData
+    localStorage.getItem("data")
+      ? JSON.parse(localStorage.getItem("data"))
+      : jsonData
   );
-
-  const [showDelete, setShowDelete] = useState(false);
+  const [showDelete, setShowDelete] = useState(!!localStorage.getItem("data"));
 
   const [show, setShow] = useState({});
 
   useEffect(() => {
-    showDelete && localStorage.setItem("data", JSON.stringify(data));
+    if (showDelete) {
+      localStorage.setItem("data", JSON.stringify(data));
+    }
   }, [data]);
 
   const handleChange = () => {
-    setShowDelete((current) => !current);
-  };
-
-  const handleClear = () => {
-    setData(jsonData);
+    setShowDelete(!showDelete);
+    if (showDelete) {
+      localStorage.clear();
+      setData(jsonData);
+    }
   };
 
   const toggleFolder = (folderId, type) => {
@@ -65,12 +68,11 @@ const FileManager = () => {
           <label>Save data in localStorage</label>
           <input
             className="fileManagerInput"
-            value={showDelete}
-            onChange={handleChange}
+            defaultChecked={showDelete}
+            onChange={() => handleChange()}
             type="checkbox"
           />
         </div>
-        {showDelete && <button onClick={handleClear}>Clear Items</button>}
       </div>
     </div>
   );
