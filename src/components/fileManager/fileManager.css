@@ -1,0 +1,21 @@
+.fileManager {
+  display: flex;
+  gap: 100px;
+}
+.fileManagerInput {
+  align-self: flex-start;
+}
+.fileManagerInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fileManagerInputContainer div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.fileManagerInputContainer input {
+  width: 20px;
+  height: 20px;
+}

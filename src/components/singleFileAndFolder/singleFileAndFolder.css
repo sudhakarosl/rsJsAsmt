@@ -1,0 +1,18 @@
+.singleFileAndFolder{
+    margin: 7px 0px 0px 25px;
+    padding-right: 2px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    align-items: center;
+    gap:5px;
+    width: 300px;
+}
+.singleFileAndFolderName{
+    padding:4px 20px;
+    display: flex;
+    flex: 1;
+    cursor: pointer;
+    align-items: center;
+    gap:8px
+}
