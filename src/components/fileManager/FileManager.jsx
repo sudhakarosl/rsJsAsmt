@@ -10,19 +10,21 @@ const FileManager = () => {
       ? JSON.parse(localStorage.getItem("data"))
       : jsonData
   );
-  const [showDelete, setShowDelete] = useState(!!localStorage.getItem("data"));
+  const [localStorageVal, setLocalStorageVal] = useState(
+    !!localStorage.getItem("data")
+  );
 
   const [show, setShow] = useState({});
 
   useEffect(() => {
-    if (showDelete) {
+    if (localStorageVal) {
       localStorage.setItem("data", JSON.stringify(data));
     }
   }, [data]);
 
   const handleChange = () => {
-    setShowDelete(!showDelete);
-    if (showDelete) {
+    setLocalStorageVal(!localStorageVal);
+    if (localStorageVal) {
       localStorage.clear();
       setData(jsonData);
     }
@@ -47,9 +49,19 @@ const FileManager = () => {
     setData([...data]);
   };
 
-  const handleNameChange = (event, item) => {
+  const handleInputFocus = (event, item, items) => {
+    if (event.target.value == "") {
+      items.pop(item);
+    }
+    else{
+      item.name = event.target.value;
+      setData([...data]);
+    }
+    setData([...data]);
+  };
+  const handleNameChange = (event, item, items) => {
     if (event.key === "Enter") {
-      item.name = event.target.value || "new file";
+      item.name = event.target.value;
       setData([...data]);
     }
   };
@@ -58,6 +70,7 @@ const FileManager = () => {
     <div className="fileManager">
       <SingleFileAndFolder
         items={data}
+        handleInputFocus={handleInputFocus}
         toggleFolder={toggleFolder}
         handleNameChange={handleNameChange}
         addNewFileOrFolder={addNewFileOrFolder}
@@ -68,7 +81,7 @@ const FileManager = () => {
           <label>Save data in localStorage</label>
           <input
             className="fileManagerInput"
-            defaultChecked={showDelete}
+            defaultChecked={localStorageVal}
             onChange={() => handleChange()}
             type="checkbox"
           />

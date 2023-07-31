@@ -6,6 +6,7 @@ const SingleFileAndFolder = ({
   toggleFolder,
   handleNameChange,
   addNewFileOrFolder,
+  handleInputFocus,
   show,
 }) => {
   return items.map((item) => (
@@ -14,7 +15,6 @@ const SingleFileAndFolder = ({
         className="singleFileAndFolder"
         style={{
           backgroundColor: item.isFolder ? "lightgrey" : "transparent",
-          marginLeft: "20px",
         }}
       >
         <span
@@ -30,7 +30,8 @@ const SingleFileAndFolder = ({
             <input
               autoFocus
               type="text"
-              onKeyDown={(e) => handleNameChange(e, item)}
+              onBlur={(e)=>handleInputFocus(e,item,items)}
+              onKeyDown={(e) => handleNameChange(e, item, items)}
             />
           )}
         </span>
@@ -53,6 +54,7 @@ const SingleFileAndFolder = ({
               items={item.items}
               toggleFolder={toggleFolder}
               handleNameChange={handleNameChange}
+              handleInputFocus={handleInputFocus}
               addNewFileOrFolder={addNewFileOrFolder}
               show={show}
             />
